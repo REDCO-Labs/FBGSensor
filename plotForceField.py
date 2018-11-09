@@ -15,7 +15,9 @@ class displaySimualtion:
     def showSimulation(self):
         filename = 'Pression-et-Force-XYZ.txt'
         dataDict = self.importSimulationData(filename)
-        self.displayVectorField(dataDict)
+        # self.displayVectorField(dataDict)
+        self.displayABSPressionField(dataDict)
+
     def importSimulationData(self, filename):
         x, y, z, absP, Fx, Fy, Fz = np.loadtxt('{}'.format(filename),unpack=True,skiprows=2,delimiter=',')
         dataDict = {'x':x,'y':y,'z':z,'Fx':Fx,'Fy':Fy,'Fz':Fz, 'absP':absP}
@@ -28,16 +30,18 @@ class displaySimualtion:
         plt.show()
 
     def displayABSPressionField(self,dataDict):
-
-        # x = np.linspace(-3, 3, 256)
-        # y = np.linspace(-3, 3, 256)
-        # X, Y = np.meshgrid(x, y)
-        # Z = np.sinc(np.sqrt(X ** 2 + Y ** 2))
-
         fig = plt.figure()
+        listAbsNorm = self.normalizeABSPressure(dataDict)
         ax = fig.gca(projection = '3d')
-        ax.plot_surface(X, Y, Z, cmap=cm.gray)
+        ax.scatter(dataDict['x'], dataDict['y'], dataDict['z'], c=[(1 ,1, i) for i in listAbsNorm])
         plt.show()
+
+    def normalizeABSPressure(self,dictData):
+         dataDictAbsNorm = []
+         maxABSP = max(dictData['absP'])
+         for absP in  dictData['absP']:
+             dataDictAbsNorm.append(absP/maxABSP)
+         return dataDictAbsNorm
 
 
 d = displaySimualtion()
