@@ -33,13 +33,13 @@ class displaySimualtion:
         fig = plt.figure()
         listAbsNorm = self.normalizeABSPressure(dataDict)
         ax = fig.gca(projection = '3d')
-        ax.scatter(dataDict['x'], dataDict['y'], dataDict['z'], c=[(1 ,1, i) for i in listAbsNorm])
+        ax.scatter(dataDict['x'], dataDict['y'], dataDict['z'], c=[(1 ,i,1) for i in listAbsNorm], )
         plt.show()
 
     def normalizeABSPressure(self,dictData):
          dataDictAbsNorm = []
          maxABSP = max(dictData['absP'])
-         for absP in  dictData['absP']:
+         for absP in dictData['absP']:
              dataDictAbsNorm.append(absP/maxABSP)
          return dataDictAbsNorm
 
